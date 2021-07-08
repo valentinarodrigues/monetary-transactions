@@ -1,0 +1,50 @@
+<title>Save Transactions</title>
+
+<link rel="stylesheet" type="text/css" href="/css/style.css" />
+
+<body>
+  <div>
+    <form action="" id="saveTransactionForm" method="post">
+      <input id="transId" type="number" placeholder="Transaction Id" required="true"><br />
+      <input id="amount" type="number" placeholder="Enter Amount" required="true"><br />
+      <input id="typeOfTransaction" type="text" placeholder="Type" required="true"><br />
+      <input id="parent_id" type="number" placeholder="Parent Transaction Id"><br />
+      <input type="submit">
+    </form>
+  </div>
+</body>
+
+<script type="text/javascript">
+  // $ DOM convention
+  const $transactionForm = document.querySelector('#saveTransactionForm')
+  const transId = $transactionForm.querySelector('#transId')
+  const amount = $transactionForm.querySelector('#amount')
+  const typeOfTransaction = $transactionForm.querySelector('#typeOfTransaction')
+  const parent_id = $transactionForm.querySelector('#parent_id')
+
+  $transactionForm.addEventListener('submit', function (e) {
+    e.preventDefault($transactionForm);
+    const body = {
+      amount: amount.value,
+      type: typeOfTransaction.value,
+      parent_id: parent_id.value
+    }
+    fetch(`http://localhost:3000/transactionservice/transaction/${transId.value}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(body)
+    }).then(response => response.json())
+      .then(data => {
+        if (data.status === "ok") {
+          alert('Successfully Added!')
+        } else alert(data.message)
+      })
+      .catch((error) => {
+        alert('Something went wrong');
+      });
+
+  })
+
+</script>
