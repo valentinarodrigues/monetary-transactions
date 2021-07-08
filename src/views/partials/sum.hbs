@@ -1,0 +1,36 @@
+<title>Sum of Amount</title>
+<link rel="stylesheet" type="text/css" href="/css/style.css" />
+
+<body>
+  <div>
+    <form action="" name="form" id="sum" method="post">
+      <input id="transactionId" type="number" name="transactionId" placeholder="Transaction Id for sum"
+        required="true"><br />
+      <input type="submit">
+    </form>
+  </div>
+</body>
+
+<script type="text/javascript">
+  // $ DOM convention
+  const $sumForm = document.querySelector('#sum')
+  const transactionId = $sumForm.querySelector('#transactionId')
+
+  $sumForm.addEventListener('submit', function (e) {
+    e.preventDefault();
+    fetch(`http://localhost:3000/transactionservice/sum/${transactionId.value}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    }).then(response => response.json())
+      .then(data => {
+        if (data.status === "ok") {
+        document.body.insertAdjacentHTML("BeforeEnd", `<P ALIGN=\"center\">${data.data[0].sum}</P>`)
+        } else alert(data.message)
+      })
+      .catch((error) => {
+        alert('Something went wrong')
+      });
+  })
+</script>

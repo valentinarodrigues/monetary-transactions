@@ -1,0 +1,53 @@
+<button class="tablink" onclick="openPage('saveTransactions', this, 'red')">Save Transactions</button>
+<button class="tablink" onclick="openPage('Type', this, 'green')" id="defaultOpen">Type</button>
+<button class="tablink" onclick="openPage('Transactions', this, 'blue')">Transactions</button>
+<button class="tablink" onclick="openPage('Sum', this, 'orange')">Sum</button>
+
+<div id="saveTransactions" class="tabcontent">
+  <h3>Save Transactions</h3>
+ {{> saveTransactions}}
+</div>
+
+<div id="Type" class="tabcontent">
+  <h3>Type</h3>
+  {{> type}}
+
+</div>
+
+<div id="Transactions" class="tabcontent">
+  <h3>Transactions</h3>
+ {{> transactions}}
+</div>
+
+<div id="Sum" class="tabcontent">
+  <h3>Sum</h3>
+  {{> sum}}
+</div>
+
+
+
+<script type="text/javascript">
+  function openPage(pageName, elmnt, color) {
+  // Hide all elements with class="tabcontent" by default */
+  var i, tabcontent, tablinks;
+  tabcontent = document.getElementsByClassName("tabcontent");
+  for (i = 0; i < tabcontent.length; i++) {
+    tabcontent[i].style.display = "none";
+  }
+
+  // Remove the background color of all tablinks/buttons
+  tablinks = document.getElementsByClassName("tablink");
+  for (i = 0; i < tablinks.length; i++) {
+    tablinks[i].style.backgroundColor = "";
+  }
+
+  // Show the specific tab content
+  document.getElementById(pageName).style.display = "block";
+
+  // Add the specific color to the button used to open the tab content
+  elmnt.style.backgroundColor = color;
+}
+
+// Get the element with id="defaultOpen" and click on it
+document.getElementById("defaultOpen").click();
+</script>
